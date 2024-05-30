@@ -1,0 +1,56 @@
+/* Colors */
+:root{
+    --bs-info-rgb: hsl(190, 90%, 50%);
+}
+
+/* Navbar */
+.navbar{
+    padding: 0;
+    height: 100%;
+}
+.navbar-brand{
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+.navbar-img{
+    height: calc( var(--header-h) - 2rem );
+}
+
+@media screen and (width<576px) {
+    .navbar-img{
+        display: none !important;
+    }
+}
+
+/* Cards */
+.card-header{
+    background-color: var(--main-bg);
+    color: whitesmoke;
+    text-shadow: 0 0 2px gray;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+}
+.card{
+    text-align: left;
+    border-style: none;
+    box-shadow: 0 0 3px var(--bs-gray-500);
+}
+.card-title{
+    cursor: pointer;
+}
+.card-text{
+    white-space: pre-line;
+}
+.card-footer{
+    background-color: var(--bs-card-bg);
+}
+
+/* @media screen and (prefers-color-scheme: dark) {
+    :root{
+        --bs-body-color: whitesmoke;
+    }
+    .card, .card-footer, .card-text{
+        background-color: var(--bs-gray-900);
+    }
+} */

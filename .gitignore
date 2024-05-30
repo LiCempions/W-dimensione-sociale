@@ -1,0 +1,6 @@
+/.tmp.drive**
+/.vscode
+/**.bat
+/backend/.vscode
+/backend/__pycache__
+/backend/**.sql

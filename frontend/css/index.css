@@ -1,0 +1,48 @@
+:root{
+    --footer-h: 6rem;
+}
+
+body{
+    position: relative;
+    min-height: 100dvh;
+    padding-bottom: var(--footer-h);
+}
+
+footer{
+    position: absolute;
+    bottom: 0;
+
+    width: 100%;
+    height: var(--footer-h);
+    
+    text-align: center;
+
+    background-color: var(--bs-gray-400);
+    color: var(--bs-gray-700);
+}
+.card{
+    transform: rotate(0);
+}
+
+@media screen and (width<=576px) {
+    .card{
+        width: 80vw;
+    }
+    #registerCard{
+        position: absolute;
+        right: 0;
+        transform-origin: right 10%;
+        transform: rotate(-90deg);
+        transition: transform 0.3s;
+    }
+    #loginCard{
+        position: absolute;
+        left: 0;
+        transform-origin: left 15%;
+        transform: rotate(0);
+        transition: transform 0.3s;
+    }
+    body{
+        overflow-x: hidden;
+    }
+}

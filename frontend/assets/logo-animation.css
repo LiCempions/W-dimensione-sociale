@@ -1,0 +1,14 @@
+#path3, #text3{
+    animation: fade-in normal 1s ease-out;
+}
+@keyframes fade-in {
+    0%{
+        opacity: 0%;
+    }
+    100%{
+        opacity: 100%;
+    }
+}
+svg{
+    background-color: black;
+}

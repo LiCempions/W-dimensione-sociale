@@ -1,0 +1,135 @@
+body{
+    height: 100dvh;
+}
+main{
+    height: calc(100% - var(--header-h) );
+}
+
+#username{
+    font-size: 130%;
+}
+
+.content{
+    flex-grow: 1;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    height: 100%;
+
+    overflow-y: auto;
+
+    padding-bottom: 1rem;
+}
+
+
+.separator{
+    width: 95%;
+}
+.post{
+    width: 50%;
+    max-width: 50rem;
+}
+.postText{
+    resize: none;
+    border-style: none;
+}
+
+.newAnswerArea{
+    margin-right: 1rem;
+    padding: 0.3rem 1rem;
+
+    flex-grow: 1;
+
+    resize: none;
+
+    border-radius: 1rem / 50%;
+
+    box-shadow: 0 0 3px var(--bs-gray-500);
+
+    border: none;
+}
+.answer{
+    margin: 1rem 0;
+    border-top: 1px var(--bs-gray-300) solid;
+    padding: 0.8rem 0.8rem 0;
+}
+
+.like{
+    height: 1.3rem;
+}
+.like-btn, .like-btn-ans{
+    height: fit-content;
+    width: fit-content;
+    padding: 0.1rem 0.5rem 0.3rem;
+    border-radius: 1rem;
+}
+.like-btn-ans{
+    background-color: var(--bs-gray-600);
+}
+.like-btn-ans:disabled, .like-btn-ans:hover{
+    background-color: var(--bs-gray-500);
+}
+
+.fade-out-text{
+    position: relative;
+    text-wrap: nowrap;
+    overflow-x: hidden;
+}
+.fade-out-text::after{
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 20%;
+    background: linear-gradient(to right, rgba(255,255,255,0), white 80%);
+}
+
+.friend-list{
+    width: 60%;
+}
+.friend-list-item{
+    display: flex;
+    border-bottom: var(--bs-gray-300) solid 1px;
+    
+    padding: 0.5rem 1rem;
+}
+.friend-list-title{
+    font-weight: 700;
+    height: fit-content;
+}
+
+.addfriend{
+    height: 1.5rem;
+}
+.btn-wave-icon:hover>img{
+    animation: shake 0.5s;
+}
+
+#chatBox{
+    width: 80%;
+    max-width: 50rem;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column-reverse;
+}
+.message{
+    border: 1px solid rgb(216, 255, 216);
+    box-shadow: black;
+    border-radius: 1rem;
+    background-color: none;
+    padding: 0.5rem 2rem;
+    max-width: 80%;
+    text-align: start;
+}
+
+@media screen and (width<992px) {
+    .post{
+        width: 80%;
+    }
+    .friend-list{
+        width: 100%;
+    }
+}

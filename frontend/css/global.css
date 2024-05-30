@@ -1,0 +1,58 @@
+:root{
+    /* --main-color-1: hsl(117, 78%, 43%); */
+    --main-bg: hsl(143, 96%, 46%);
+    --main-color-1: hsl(117, 94%, 42%);
+    --main-color-2: hsl(117, 90%, 60%);
+    /* --main-bg: #0f288a; */
+    /* --main-bg: #00ec5b; */
+    
+}
+:root{
+    --header-h: 4.5rem;
+
+    --main-bg: #194b3d;
+    /* --main-color-1: #1943d9; */
+    /* --main-color-1: #9289cb; */
+    --main-color-1: hsl(117, 94%, 30%);
+    --border-color: whitesmoke;
+}
+
+header{
+    height: var(--header-h);
+}
+
+textarea:focus-visible{
+    outline: none;
+}
+
+.main-bg, .main-bg-darken{
+    background-color: var(--main-bg);
+}
+.main-bg-darken:hover, .main-bg-darken:active, .main-bg-darken:focus-within, .main-bg-darken:disabled{
+    background-color: hsl(from var(--main-bg) h s calc(l - 5));
+}
+
+.main-color-bg{
+    background-color: var(--main-color-1);
+}
+.main-color-bg:hover, .main-color-bg:active, .main-color-bg:focus-within, .main-color-bg:disabled{
+    background-color: hsl(from var(--main-color-1) h s calc(l - 4));
+}
+
+.text-shadow{
+    text-shadow: 0 0 2px gray;
+}
+
+.no-border{
+    border-style: none;
+}
+
+@media screen and (prefers-color-scheme: dark) {
+    :root{
+        --border-color: gray;
+    }
+    
+    body{
+        background-color: black;
+    }
+}
