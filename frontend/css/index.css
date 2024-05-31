@@ -46,3 +46,9 @@ footer{
         overflow-x: hidden;
     }
 }
+@media screen and (prefers-color-scheme:dark) {
+    footer{
+        background-color: var(--bs-gray-900);
+        color: var(--bs-gray-400);
+    }
+}
