@@ -35,8 +35,8 @@ function showNewPostForm() {
     `;
     form.addEventListener("submit", async (event)=>{
         event.preventDefault();
-        form.reset();
         await newPost();
+        form.reset();
         loadPinboard();
     });
 
@@ -340,6 +340,8 @@ async function newPost() {
         "username": sessionStorage.getItem("username"),
         "postText": document.getElementById("newPostContent").value
     }
+    console.log("Started");
+    console.log(document.getElementById("newPostContent"));
 
     if (data.postText != "") {
         try {
