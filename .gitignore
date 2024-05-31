@@ -4,3 +4,4 @@
 /backend/.vscode
 /backend/__pycache__
 /backend/**.sql
+/frontend/test.html
