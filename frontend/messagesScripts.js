@@ -45,8 +45,6 @@ async function newMessage(user) {
 }
 
 window.onload = ()=>{
-    document.getElementById("username").innerText = sessionStorage.getItem("username");
-
     const user = window.location.href.slice(
         window.location.href.lastIndexOf("?")+1
     );
