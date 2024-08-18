@@ -45,9 +45,10 @@ async function newMessage(user) {
 }
 
 window.onload = ()=>{
-    const user = window.location.href.slice(
-        window.location.href.lastIndexOf("?")+1
-    );
+    const user = decodeURI(
+        window.location.href.slice(
+            window.location.href.lastIndexOf("?")+1
+    ));
 
     document.getElementById("location").innerHTML = `
     <img src="assets/messages.svg" alt="Chat con:" h="2rem" class="d-inline-block ">
