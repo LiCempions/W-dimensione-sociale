@@ -1,6 +1,13 @@
 body{
     height: 100dvh;
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    grid-template-rows: min-content auto;
 }
+header{
+    grid-column: 1 / span 2;
+}
+
 main{
     height: calc(100% - var(--header-h) );
 }
