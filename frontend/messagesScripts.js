@@ -60,7 +60,7 @@ window.onload = ()=>{
         if (document.getElementById("newMessageContent").value!="") {
             newMessage(user);
             generateMessage({"auth":sessionStorage.getItem("username"), "text":document.getElementById("newMessageContent").value});
-            form.reset();
+            document.getElementById("newPost").reset();
         }
     });
 
