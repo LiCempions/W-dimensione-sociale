@@ -17,9 +17,21 @@
     --border-color: whitesmoke;
 }
 
+
+body{
+    height: 100dvh;
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    grid-template-rows: min-content auto;
+}
 header{
     height: var(--header-h);
+    grid-column: 1 / span 2;
 }
+main{
+    overflow-y: auto;
+}
+
 
 textarea:focus-visible{
     outline: none;
@@ -55,4 +67,18 @@ textarea:focus-visible{
     body{
         background-color: black;
     }
+}
+
+
+.separator{
+    width: 95%;
+}
+
+.post{
+    width: 50%;
+    max-width: 50rem;
+}
+.postText{
+    resize: none;
+    border-style: none;
 }

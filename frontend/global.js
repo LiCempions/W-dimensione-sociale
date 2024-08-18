@@ -7,7 +7,9 @@ document.getElementById("username").innerText = sessionStorage.getItem("username
 */
 //#region - Listener di eventi nella barra laterale
 
-document.getElementById("sidebar-pinboard").addEventListener("click", loadPinboard)
+document.getElementById("sidebar-pinboard").addEventListener("click", ()=>{
+    window.location.href = "homepage.html";
+})
 
 document.getElementById("sidebar-friends").addEventListener("click", friendList)
 
