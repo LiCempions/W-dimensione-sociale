@@ -29,6 +29,21 @@ async function loadMessages(user) {
     }
 }
 
+async function newMessage(user) {
+    try {
+        const chatData = {"userAuth": sessionStorage.getItem("username"), "userDest": user, "DMText":document.getElementById("newMessageContent").value}
+        const response = await fetch(`http://127.0.0.1:8000/api/v1/message`, {"method":"POST", "headers":{"Content-Type":"application/json"}, "body":JSON.stringify(chatData)})
+        if (response.ok) {
+            const data = await response.json();
+            console.log(data.msg);
+        } else {
+            console.error("Errore nel database: ", response.statusText);
+        }
+    } catch (err) {
+        console.error("Errore nella lettura dei messaggi: ", err);
+    }
+}
+
 window.onload = ()=>{
     document.getElementById("username").innerText = sessionStorage.getItem("username");
 
@@ -36,8 +51,18 @@ window.onload = ()=>{
         window.location.href.lastIndexOf("?")+1
     );
 
-    loadMessages(user);
     document.getElementById("location").innerHTML = `
     <img src="assets/messages.svg" alt="Chat con:" h="2rem" class="d-inline-block ">
     ${user}`;
+
+    document.getElementById("newPost").addEventListener("submit", (event)=>{
+        event.preventDefault()
+        if (document.getElementById("newMessageContent").value!="") {
+            newMessage(user);
+            generateMessage({"auth":sessionStorage.getItem("username"), "text":document.getElementById("newMessageContent").value});
+            form.reset();
+        }
+    });
+
+    loadMessages(user);
 }
