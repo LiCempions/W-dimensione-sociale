@@ -1,0 +1,39 @@
+main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.friend-list{
+    width: 60%;
+    flex-grow: 1;
+    flex-shrink: 1;
+
+    overflow-y: auto;
+}
+
+.friend-list-item{
+    display: flex;
+    border-bottom: var(--bs-gray-300) solid 1px;
+    
+    padding: 0.5rem 1rem;
+}
+
+.friend-list-title{
+    font-weight: 700;
+    height: fit-content;
+}
+
+.addfriend{
+    height: 1.5rem;
+}
+.btn-wave-icon:hover>img{
+    animation: shake 0.5s;
+}
+
+@media screen and (width<992px) {
+    .friend-list{
+        width: 100%;
+    }
+}
