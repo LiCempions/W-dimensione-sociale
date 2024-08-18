@@ -11,7 +11,9 @@ document.getElementById("sidebar-pinboard").addEventListener("click", ()=>{
     window.location.href = "homepage.html";
 })
 
-document.getElementById("sidebar-friends").addEventListener("click", friendList)
+document.getElementById("sidebar-friends").addEventListener("click", ()=>{
+    window.location.href = "friendsList.html";
+})
 
 document.getElementById("sidebar-profile").addEventListener("click", ()=>{
     emptyContent()
