@@ -8,10 +8,6 @@ header{
     grid-column: 1 / span 2;
 }
 
-main{
-    height: calc(100% - var(--header-h) );
-}
-
 #username{
     font-size: 130%;
 }
