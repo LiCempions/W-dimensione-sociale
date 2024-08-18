@@ -21,13 +21,24 @@
 body{
     height: 100dvh;
     display: grid;
-    grid-template-columns: 1fr 4fr;
+    grid-template-columns: min-content auto;
     grid-template-rows: min-content auto;
 }
 header{
     height: var(--header-h);
     grid-column: 1 / span 2;
 }
+
+@media screen and (width<576px) {
+    body{
+        grid-template-columns: auto;
+        grid-template-rows: repeat(2, min-content) auto;
+    }
+    header{
+        grid-column: 1 / 1;
+    }
+}
+
 main{
     overflow-y: auto;
 }
