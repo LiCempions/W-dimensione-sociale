@@ -412,7 +412,10 @@ async function loadFriends(user){
                 message.className = "btn main-color-bg btn-wave-icon mx-1";
                 remove.className = "btn btn-danger btn-wave-icon mx-1";
 
-                message.onclick = ()=>{loadChat(curr)};
+                // message.onclick = ()=>{loadChat(curr)};
+                message.onclick = ()=>{
+                    window.location.href = `messages.html?${curr}`;
+                };
                 remove.onclick = ()=>{removeFriend(curr)};
 
                 message.innerHTML = '<img src="assets/messages.svg" alt="chat" class="addfriend">';
@@ -649,28 +652,4 @@ function loadChat(user) {
 // Inizializzazione -----------------------
 window.onload = loadPinboard
 
-document.getElementById("username").innerText = sessionStorage.getItem("username");
-//#endregion
-
-/* 
-===========================================
-- Listener di eventi nella barra laterale -
-===========================================
-*/
-//#region - Listener di eventi nella barra laterale
-
-document.getElementById("sidebar-pinboard").addEventListener("click", loadPinboard)
-
-document.getElementById("sidebar-friends").addEventListener("click", friendList)
-
-document.getElementById("sidebar-profile").addEventListener("click", ()=>{
-    emptyContent()
-    loadSpecificPosts(sessionStorage.getItem("username"))
-    document.getElementById("location").innerText = "Profilo"
-})
-
-document.getElementById("sidebar-logout").addEventListener("click", ()=>{
-    sessionStorage.removeItem("username")
-    window.location = "index.html";
-})
 //#endregion

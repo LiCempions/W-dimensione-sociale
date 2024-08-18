@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="css/bs-override.css">
     <link rel="stylesheet" href="css/animations.css">
     <link rel="stylesheet" href="css/global.css">
+    <!-- <link rel="stylesheet" href="css/homepage.css"> -->
     <link rel="stylesheet" href="css/messages.css">
-    <link rel="stylesheet" href="css/homepage.css">
     <link rel="stylesheet" href="css/sidebar.css">
 </head>
 <body>
@@ -45,12 +45,19 @@
             </li>
         </ul>
     </nav>
-    <main class="d-flex flex-column flex-sm-row main flex-fill">
-        <div class="text-center pt-sm-4 content" id="content">
-        </div>
+    <main>
+        <div id="chatBox"></div>
+
+        <hr class="text-secondary separator">
+
+        <form class="card post" id="newPost">
+            <textarea class="card-body postText " id="newMessageContent" placeholder="Scrivi un messaggio"></textarea>
+            <input type="submit" value="Invia" class="card-footer btn main-color-bg text-light ">
+        </form>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="homepageScripts.js"></script>
+    <script src="messagesScripts.js"></script>
+    <script src="global.js"></script>
     <script src="autoDark.js"></script>
 </body>
 </html>
