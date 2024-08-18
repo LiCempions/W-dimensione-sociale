@@ -64,32 +64,8 @@
     background: linear-gradient(to right, rgba(255,255,255,0), white 80%);
 }
 
-.friend-list{
-    width: 60%;
-}
-.friend-list-item{
-    display: flex;
-    border-bottom: var(--bs-gray-300) solid 1px;
-    
-    padding: 0.5rem 1rem;
-}
-.friend-list-title{
-    font-weight: 700;
-    height: fit-content;
-}
-
-.addfriend{
-    height: 1.5rem;
-}
-.btn-wave-icon:hover>img{
-    animation: shake 0.5s;
-}
-
 @media screen and (width<992px) {
     .post{
         width: 80%;
-    }
-    .friend-list{
-        width: 100%;
     }
 }
