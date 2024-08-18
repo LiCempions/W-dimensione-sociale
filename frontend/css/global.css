@@ -70,6 +70,10 @@ textarea:focus-visible{
 }
 
 
+#username{
+    font-size: 130%;
+}
+
 .separator{
     width: 95%;
 }
