@@ -52,7 +52,7 @@ function generatePost(postData) {
     const post = document.createElement("div");
     post.className = "card post mt-2 ";
     post.innerHTML = `
-    <div class="card-header " onclick="loadUserPinboard('${postData.auth}')">
+    <div class="card-header " onclick="setSParam('user', '${postData.auth}')">
         <h5 class="card-title ">${postData.auth}</h5>
     </div>
     <div class="card-body ">
@@ -102,7 +102,7 @@ function generateAnswer(postID, answerData, isFirst=false){
     answer.classList.add("answer")
 
     answerAuth.innerText = answerData.auth;
-    answerAuth.addEventListener("click", ()=>{loadUserPinboard(answerData.auth)});
+    answerAuth.addEventListener("click", ()=>{setSParam("user", answerData.auth)});
 
     answerText.innerText = answerData.answerText;
 
