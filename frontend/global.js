@@ -26,3 +26,16 @@ document.getElementById("sidebar-logout").addEventListener("click", ()=>{
     window.location.href = "/frontend/index.html";
 })
 //#endregion
+
+
+/* 
+===========================================
+------------------ Utili ------------------
+===========================================
+*/
+
+function setSParam(param /*String*/, user) {
+    const params = new URLSearchParams(window.location.search);
+    params.set(param, user);
+    window.location.search = params.toString();
+}
