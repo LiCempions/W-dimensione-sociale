@@ -44,16 +44,17 @@ async function newMessage(user) {
     }
 }
 
-window.onload = ()=>{
-    const user = decodeURI(
-        window.location.href.slice(
-            window.location.href.lastIndexOf("?")+1
-    ));
+const sParams = new URLSearchParams(window.location.search);
 
+window.onload = ()=>{
+    const user = sParams.get("user");
+
+    // Location indicator with image
     document.getElementById("location").innerHTML = `
     <img src="assets/messages.svg" alt="Chat con:" h="2rem" class="d-inline-block ">
     ${user}`;
 
+    // Send message
     document.getElementById("newPost").addEventListener("submit", (event)=>{
         event.preventDefault()
         if (document.getElementById("newMessageContent").value!="") {
@@ -63,5 +64,6 @@ window.onload = ()=>{
         }
     });
 
+    // Load messages
     loadMessages(user);
 }
