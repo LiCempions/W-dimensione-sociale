@@ -8,11 +8,11 @@ document.getElementById("username").innerText = sessionStorage.getItem("username
 //#region - Listener di eventi nella barra laterale
 
 document.getElementById("sidebar-pinboard").addEventListener("click", ()=>{
-    window.location.pathname = "/homepage.html";
+    window.location.href = "/frontend/homepage.html";
 })
 
 document.getElementById("sidebar-friends").addEventListener("click", ()=>{
-    window.location.pathname = "/friendsList.html";
+    window.location.href = "/frontend/friendsList.html";
 })
 
 document.getElementById("sidebar-profile").addEventListener("click", ()=>{
@@ -23,6 +23,6 @@ document.getElementById("sidebar-profile").addEventListener("click", ()=>{
 
 document.getElementById("sidebar-logout").addEventListener("click", ()=>{
     sessionStorage.removeItem("username")
-    window.location.pathname = "/index.html";
+    window.location.href = "/frontend/index.html";
 })
 //#endregion
