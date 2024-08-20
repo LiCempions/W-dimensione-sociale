@@ -16,9 +16,9 @@ document.getElementById("sidebar-friends").addEventListener("click", ()=>{
 })
 
 document.getElementById("sidebar-profile").addEventListener("click", ()=>{
-    emptyContent()
-    loadSpecificPosts(sessionStorage.getItem("username"))
-    document.getElementById("location").innerText = "Profilo"
+    const sParams = new URLSearchParams(window.location.search);
+    sParams.set("user", sessionStorage.getItem("username"));
+    window.location.href = "/frontend/homepage.html?" + sParams.toString();
 })
 
 document.getElementById("sidebar-logout").addEventListener("click", ()=>{
