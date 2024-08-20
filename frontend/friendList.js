@@ -48,11 +48,15 @@ async function loadFriends(user){
 
             data.userList.forEach(curr => {
                 const friend = document.createElement("div");
-                friend.className = "justify-content-center align-items-center friend-list-item"
-
+                
                 const name = document.createElement("h6");
                 const message = document.createElement("button");
                 const remove = document.createElement("button");
+
+                const params = new URLSearchParams("");
+                params.set("user", curr);
+
+                friend.className = "justify-content-center align-items-center friend-list-item"
 
                 name.innerText = curr;
                 name.className = "flex-fill";
@@ -61,7 +65,7 @@ async function loadFriends(user){
                 remove.className = "btn btn-danger btn-wave-icon mx-1";
 
                 message.onclick = ()=>{
-                    window.location.href = `messages.html?${curr}`;
+                    window.location.href = '/frontend/messages.html?' + params.toString();
                 };
                 remove.onclick = ()=>{removeFriend(curr)};
 
@@ -135,5 +139,5 @@ async function loadUsers(friendList) {
 
 window.onload = async () => {
     const friendList = await loadFriends(sessionStorage.getItem("username"));
-    await loadUsers(friendList);
+    loadUsers(friendList);
 }
