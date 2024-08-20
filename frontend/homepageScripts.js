@@ -383,6 +383,9 @@ function loadMoreAnswers(postID, loadAll) {
 }
 
 // Inizializzazione -----------------------
-window.onload = loadPinboard
+window.onload = ()=>{
+    const params = new URLSearchParams(window.location.search);
+    params.get("user") == null ? loadPinboard() : loadUserPinboard(params.get("user"));
+}
 
 //#endregion
