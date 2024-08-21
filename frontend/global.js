@@ -76,7 +76,7 @@ function highlightTags(text/*String*/) {
         segments.push( text.slice(stop, start) );
         
         stop = firstOccurrence(text, stopChars, start);
-        
+        if (start >= text.length) break;
         segments.push( text.slice(start, stop) );
         
         start = firstOccurrence(text, ['#','@'], stop);
