@@ -51,6 +51,10 @@ function showNewPostForm() {
 function generatePost(postData) {
     const post = document.createElement("div");
     post.className = "card post mt-2 ";
+    let testo;
+
+    postData.postText = highlightTags(postData.postText);
+    
     post.innerHTML = `
     <div class="card-header " onclick="setSParam('user', '${postData.auth}')">
         <h5 class="card-title ">${postData.auth}</h5>
@@ -104,7 +108,7 @@ function generateAnswer(postID, answerData, isFirst=false){
     answerAuth.innerText = answerData.auth;
     answerAuth.addEventListener("click", ()=>{setSParam("user", answerData.auth)});
 
-    answerText.innerText = answerData.answerText;
+    answerText.innerText = highlightTags(answerData.answerText);
 
     answerLike.className = "btn text-light like-btn-ans text-shadow";
     answerLike.id = answerData.answerID+"-answerLikeBtn";
