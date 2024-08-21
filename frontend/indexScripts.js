@@ -7,6 +7,14 @@ document.getElementById("register").addEventListener("submit", async (event)=>{
         "password" : document.getElementById("passReg").value
     }
 
+    if (formData.username.search(illegalChars)!=-1) {
+        document.getElementById("userRegLabel").innerHTML =
+        `Nome Utente - <span class="text-danger">non deve contenere i seguenti: ${
+            illegalChars.source.slice(1, -1).match(/./g).join(' ')
+        }</span>`
+        return
+    }
+
     try {
         const response = await fetch("http://127.0.0.1:8000/api/v1/register", {
             method: "POST",
