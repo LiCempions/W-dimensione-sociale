@@ -9,8 +9,10 @@ document.getElementById("register").addEventListener("submit", async (event)=>{
 
     if (formData.username.search(illegalChars)!=-1) {
         document.getElementById("userRegLabel").innerHTML =
-        `Nome Utente - <span class="text-danger">non deve contenere i seguenti: ${
-            illegalChars.source.slice(1, -1).match(/./g).join(' ')
+        `Nome Utente - <span class="text-danger">proibiti: ${
+            illegalChars.source.slice(1, -1).replace(" ","").match(/./g).join(' ').concat(" e spazi")
+            // mostra i singoli caratteri della regex separati da spazi bianchi
+            // sostituisce lo spazio bianco nella regex con la scritta "e spazi"
         }</span>`
         return
     }

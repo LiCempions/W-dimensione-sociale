@@ -1,1 +1,1 @@
-const illegalChars = /[?!:;,.]/
+const illegalChars = /[?!:;,. ]/
