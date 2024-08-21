@@ -88,7 +88,7 @@ function highlightTags(text/*String*/) {
 
         sParams.set( tagType, segments[i].slice(1) );
         
-        segments[i] = `<a class='tag' href='frontend/homepage.html?${sParams.toString()}'>${segments[i]}</a>`;
+        segments[i] = `<a class='tag' href='homepage.html?${sParams.toString()}'>${segments[i]}</a>`;
 
         sParams.delete(tagType);
     }
