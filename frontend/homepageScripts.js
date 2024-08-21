@@ -108,7 +108,7 @@ function generateAnswer(postID, answerData, isFirst=false){
     answerAuth.innerText = answerData.auth;
     answerAuth.addEventListener("click", ()=>{setSParam("user", answerData.auth)});
 
-    answerText.innerText = highlightTags(answerData.answerText);
+    answerText.innerHTML = highlightTags(answerData.answerText);
 
     answerLike.className = "btn text-light like-btn-ans text-shadow";
     answerLike.id = answerData.answerID+"-answerLikeBtn";

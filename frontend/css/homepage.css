@@ -33,6 +33,10 @@
     padding: 0.8rem 0.8rem 0;
 }
 
+.answer>p{
+    white-space-collapse: preserve-breaks;
+}
+
 .like{
     height: 1.3rem;
 }
