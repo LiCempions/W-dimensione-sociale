@@ -308,15 +308,12 @@ def getLikes(postId: str):
         cursor.execute(query, values)
         likesNumber = cursor.fetchone()[0]
 
-        # query = "SELECT user_id FROM answer_likes WHERE answer_id = %s"
-        # cursor.execute(query, values)
-        # users = cursor.fetchall()
-        # userList = [user[0] for user in users]
+        query = "SELECT user_id FROM answer_likes WHERE answer_id = %s"
+        cursor.execute(query, values)
+        users = cursor.fetchall()
+        userList = [user[0] for user in users]
 
-        return {
-                "likesNumber": likesNumber
-                # , "userList": userList
-            }
+        return {"likesNumber": likesNumber, "userList": userList}
     except mysql.connector.Error as err:
         return {"msg": f"Errore durante la lettura dei likes della risposta: {err}"}
     finally:
