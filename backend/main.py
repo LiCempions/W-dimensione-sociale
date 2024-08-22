@@ -284,7 +284,7 @@ def getLikes(postId: str):
         query = "SELECT user_id FROM likes WHERE post_id = %s"
         values = [postId]
         cursor.execute(query, values)
-        users = cursor.fetchall()
+        users = cursor.fetchmany(3)
         userList = [user[0] for user in users]
 
         query = "SELECT COUNT(*) FROM likes WHERE post_id = %s"
