@@ -64,33 +64,43 @@ function firstOccurrence(string, searchStrings/* iterable */, startPos) {
 
 function highlightTags(text/*String*/) {
     let segments = [];
-    const stopChars = ' \n.,;:!?#@';
+    const stopChars = ' \n.,;:!?@#';
     let stop = 0;
     let start = firstOccurrence(text, ['#','@'], stop);
     const sParams = new URLSearchParams(window.location.search);
     const tagTypes = { '@':"user", '#':"hashtag" }
+
+    let safetyI = 0
 
     if (start == text.length) { return text };
     
     while (stop < text.length){
         segments.push( text.slice(stop, start) );
         
-        stop = firstOccurrence(text, stopChars, start);
+        stop = firstOccurrence(text, stopChars, start+1);
         if (start >= text.length) break;
         segments.push( text.slice(start, stop) );
         
         start = firstOccurrence(text, ['#','@'], stop);
+
+        // safety break
+        // safetyI++; if (safetyI > 50) {console.warn("while broken!", text.slice(0, 20), segments); break}
     }
     
-    
+    safetyI = 0;
     for (let i = 1; i < segments.length; i=i+2) {
-        const tagType = tagTypes[ segments[i][0] ]
+        if (segments[i].length == 1) continue;  // skip single # or @ chars
 
+        const tagType = tagTypes[ segments[i][0] ]
+        
         sParams.set( tagType, segments[i].slice(1) );
         
         segments[i] = `<a class='tag' href='homepage.html?${sParams.toString()}'>${segments[i]}</a>`;
-
+        
         sParams.delete(tagType);
+        
+        // safety break
+        // safetyI++; if (safetyI > 50) {console.warn("for broken!", segments[i].length); break}
     }
     
     return segments.join("");
