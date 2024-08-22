@@ -70,7 +70,7 @@ function highlightTags(text/*String*/) {
     const sParams = new URLSearchParams(window.location.search);
     const tagTypes = { '@':"user", '#':"hashtag" }
 
-    let safetyI = 0
+    // let safetyI = 0
 
     if (start == text.length) { return text };
     
@@ -87,7 +87,7 @@ function highlightTags(text/*String*/) {
         // safetyI++; if (safetyI > 50) {console.warn("while broken!", text.slice(0, 20), segments); break}
     }
     
-    safetyI = 0;
+    // safetyI = 0;
     for (let i = 1; i < segments.length; i=i+2) {
         if (segments[i].length == 1) continue;  // skip single # or @ chars
 
