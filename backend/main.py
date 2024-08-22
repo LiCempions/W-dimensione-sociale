@@ -298,22 +298,22 @@ def getLikes(postId: str):
         conn.close()
 
 #rotta di visualizzazione like risposte
-@app.get("/api/v1/getAnswerLikes/{postId}")
-def getLikes(postId: str):
+@app.post("/api/v1/getAnswerLikes")
+def getLikes(likeData: likeData):
     try:
         conn = mysql.connector.connect(**config)
         cursor = conn.cursor()
         query = "SELECT COUNT(*) FROM answer_likes WHERE answer_id = %s"
-        values = [postId]
+        values = [likeData.postId]
         cursor.execute(query, values)
         likesNumber = cursor.fetchone()[0]
 
-        query = "SELECT user_id FROM answer_likes WHERE answer_id = %s"
+        query = "SELECT COUNT(*) FROM answer_likes WHERE answer_id = %s and user_id = %s"
+        values = [likeData.postId, likeData.username]
         cursor.execute(query, values)
-        users = cursor.fetchall()
-        userList = [user[0] for user in users]
+        liked = cursor.fetchone()[0] == 1
 
-        return {"likesNumber": likesNumber, "userList": userList}
+        return {"likesNumber": likesNumber, "userLiked": liked}
     except mysql.connector.Error as err:
         return {"msg": f"Errore durante la lettura dei likes della risposta: {err}"}
     finally:

@@ -174,12 +174,18 @@ async function loadLikes(postID) {
 
 async function loadAnswerLikes(answerID) {
     try {
-        const response = await fetch(`http://127.0.0.1:8000/api/v1/getAnswerLikes/${answerID}`)
+        const likesData = {
+            "postId": answerID.toString(),
+            "username": sessionStorage.getItem("username")
+        }
+        const response = await fetch(`http://127.0.0.1:8000/api/v1/getAnswerLikes`,
+            {"method":"POST", "headers":{"Content-Type":"application/json"}, "body":JSON.stringify(likesData)}
+        )
+
         if (response.ok) {
             const data = await response.json()
             document.getElementById(`${answerID}-answerLikesNum`).innerText = data.likesNumber;
-            // document.getElementById(`${answerID}-likesList`).innerText = "Piace a: "+data.userList.join(", ");
-            document.getElementById(`${answerID}-answerLikeBtn`).disabled = data.userList.includes(sessionStorage.getItem("username"));
+            document.getElementById(`${answerID}-answerLikeBtn`).disabled = data.userLiked;
         } else {
             console.error("Errore nel database: ", response.statusText);
         }
