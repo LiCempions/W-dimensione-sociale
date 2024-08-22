@@ -54,7 +54,7 @@ class message(BaseModel):
     userDest: str
     DMText: str
 
-class likeDataPut(BaseModel):
+class likeData(BaseModel):
     username: str
     postId: str
 
@@ -322,7 +322,7 @@ def getLikes(postId: str):
 
 #rotta di aggiunta like
 @app.post("/api/v1/like")
-def likePost(likeData: likeDataPut):
+def likePost(likeData: likeData):
     try:
         conn = mysql.connector.connect(**config)
         cursor = conn.cursor()
@@ -338,7 +338,7 @@ def likePost(likeData: likeDataPut):
 
 #rotta di aggiuta like a risposta
 @app.post("/api/v1/likeAnswer")
-def likeAnswer(likeData: likeDataPut):
+def likeAnswer(likeData: likeData):
     try:
         conn = mysql.connector.connect(**config)
         cursor = conn.cursor()
