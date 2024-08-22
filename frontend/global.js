@@ -40,7 +40,7 @@ function setSParam(param /*String*/, user) {
     window.location.search = params.toString();
 }
 
-function firstOccurrence(string, searchStrings/* array */, startPos) {
+function firstOccurrence(string, searchStrings/* iterable */, startPos) {
     // Thank you JS for not letting regexes in indexOf
     let indices = [];
     let found;
@@ -64,7 +64,7 @@ function firstOccurrence(string, searchStrings/* array */, startPos) {
 
 function highlightTags(text/*String*/) {
     let segments = [];
-    const stopChars = ' \n.,;:!?';
+    const stopChars = ' \n.,;:!?#@';
     let stop = 0;
     let start = firstOccurrence(text, ['#','@'], stop);
     const sParams = new URLSearchParams(window.location.search);
