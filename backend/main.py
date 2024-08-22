@@ -276,13 +276,13 @@ def showMessages(users: doubleUser):
 
 # Likes -----------------------------------
 #rotta di visualizzazione likes
-@app.get("/api/v1/getLikes/{postId}")
-def getLikes(postId: str):
+@app.post("/api/v1/getLikes")
+def getLikes(likeData: likeData):
     try:
         conn = mysql.connector.connect(**config)
         cursor = conn.cursor()
-        query = "SELECT user_id FROM likes WHERE post_id = %s"
-        values = [postId]
+        query = "SELECT user_id FROM likes WHERE post_id = %s LIMIT 3"
+        values = [likeData.postId]
         cursor.execute(query, values)
         users = cursor.fetchall()
         userList = [user[0] for user in users]
@@ -290,7 +290,13 @@ def getLikes(postId: str):
         query = "SELECT COUNT(*) FROM likes WHERE post_id = %s"
         cursor.execute(query, values)
         likesNumber = cursor.fetchall()
-        return {"likesNumber": likesNumber[0][0], "userList": userList}
+
+        query = "SELECT COUNT(*) FROM likes WHERE post_id = %s AND user_id = %s"
+        values = [likeData.postId, likeData.username]
+        cursor.execute(query, values)
+        liked = cursor.fetchone()[0] == 1
+
+        return {"likesNumber": likesNumber[0][0], "userList": userList, "userLiked": liked}
     except mysql.connector.Error as err:
         return {"msg": f"Errore durante la lettura dei likes: {err}"}
     finally:
@@ -308,7 +314,7 @@ def getLikes(likeData: likeData):
         cursor.execute(query, values)
         likesNumber = cursor.fetchone()[0]
 
-        query = "SELECT COUNT(*) FROM answer_likes WHERE answer_id = %s and user_id = %s"
+        query = "SELECT COUNT(*) FROM answer_likes WHERE answer_id = %s AND user_id = %s"
         values = [likeData.postId, likeData.username]
         cursor.execute(query, values)
         liked = cursor.fetchone()[0] == 1

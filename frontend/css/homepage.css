@@ -33,6 +33,21 @@
     padding: 0.8rem 0.8rem 0;
 }
 
+.likes-list{
+    width: fit-content;
+    position: relative;
+    margin-bottom: 0;
+}
+.likes-list::after{
+    content: "";
+    width: 10%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(0,0,0,0), var(--bs-card-bg));
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
 .answer>p{
     white-space-collapse: preserve-breaks;
 }

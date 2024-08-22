@@ -67,7 +67,7 @@ function generatePost(postData) {
         </button>
     </div>
     <div class="card-footer ">
-        <p id="${postData.postID}-likesList" class="flex-grow-1 ">Piace a: ...</p>
+        <p id="${postData.postID}-likesList" class="likes-list">Piace a: ...</p>
     </div>
     <div class="card-footer">
         <form class="d-flex align-items-center mb-2">
@@ -158,12 +158,19 @@ function generateLoadMoreBar(postID) {
 // Likes ----------------------------------
 async function loadLikes(postID) {
     try {
-        const response = await fetch(`http://127.0.0.1:8000/api/v1/getLikes/${postID}`)
+        const likesData = {
+            "postId": postID.toString(),
+            "username": sessionStorage.getItem("username")
+        }
+        const response = await fetch(`http://127.0.0.1:8000/api/v1/getLikes`,
+            {"method":"POST", "headers":{"Content-Type":"application/json"}, "body":JSON.stringify(likesData)}
+        )
+
         if (response.ok) {
             const data = await response.json()
             document.getElementById(`${postID}-likesNum`).innerText = data.likesNumber;
             document.getElementById(`${postID}-likesList`).innerText = "Piace a: "+data.userList.join(", ");
-            document.getElementById(`${postID}-likeBtn`).disabled = data.userList.includes(sessionStorage.getItem("username"));
+            document.getElementById(`${postID}-likeBtn`).disabled = data.userLiked;
         } else {
             console.error("Errore nel database: ", response.statusText);
         }
