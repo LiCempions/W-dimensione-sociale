@@ -183,6 +183,26 @@ def getPosts(username: str):
         cursor.close()
         conn.close()
 
+
+#stampa di post specifici
+@app.post("/api/v1/filteredPosts")
+def getPosts(constraints: str):
+    try:
+        conn = mysql.connector.connect(**config)
+        cursor = conn.cursor()
+        query = "SELECT user_id, post_text, post_id FROM posts WHERE %s"
+        values = [constraints]
+        cursor.execute(query, values)
+        posts = cursor.fetchall()
+        postList = [{"auth": post[0], "postText": post[1], "postID": post[2] } for post in posts]
+
+        return {"posts":postList}
+    except mysql.connector.Error as err:
+        return {"msg": f"Errore durante la lettura dei post: {err}"}
+    finally:
+        cursor.close()
+        conn.close()
+
 #rotta di creazione post
 @app.post("/api/v1/post")
 def newPost(post: post):
