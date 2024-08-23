@@ -40,26 +40,18 @@ function setSParam(param /*String*/, user) {
     window.location.search = params.toString();
 }
 
-function firstOccurrence(string, searchStrings/* iterable */, startPos) {
-    // Thank you JS for not letting regexes in indexOf
-    let indices = [];
-    let found;
-    let smallest;
+function firstOccurrence(string, search /* Iterable */, startPos) {
+    // For each char in the string
+    for (let i = startPos; i < string.length; i++) {
 
-    // Find the first occurrence of each searchString starting from startPos
-    for (const curr of searchStrings) {
-        found = string.indexOf(curr, startPos);
-        if (found == -1) {found = string.length};
-        indices.push(found);
-    }
-    
-    // Select the firstest occurence and return it
-    smallest = indices[0];
-    for (const curr of indices) {
-        if (curr < smallest) {smallest = curr};
+        // Check if any search item appears in the string, starting from the current char
+        for (const currSearch of search) {
+            if (    string.substr(i, currSearch.length) == currSearch   )
+                return i;
+        }
     }
 
-    return smallest;
+    return string.length;
 }
 
 function highlightTags(text/*String*/) {

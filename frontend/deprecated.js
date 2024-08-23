@@ -262,3 +262,26 @@ function showNewMessageForm(user) {
     document.getElementById("innerContent").appendChild(form);
     document.getElementById("innerContent").appendChild(sep);
 }
+
+// Utili --------------------------------
+function firstOccurrence(string, searchStrings/* iterable */, startPos) {
+    // Thank you JS for not letting regexes in indexOf
+    let indices = [];
+    let found;
+    let smallest;
+
+    // Find the first occurrence of each searchString starting from startPos
+    for (const curr of searchStrings) {
+        found = string.indexOf(curr, startPos);
+        if (found == -1) {found = string.length};
+        indices.push(found);
+    }
+    
+    // Select the firstest occurence and return it
+    smallest = indices[0];
+    for (const curr of indices) {
+        if (curr < smallest) {smallest = curr};
+    }
+
+    return smallest;
+}
