@@ -1,3 +1,5 @@
+import { illegalChars } from "illegalUsernameChars.js";
+
 document.getElementById("register").addEventListener("submit", async (event)=>{
     event.preventDefault();
 

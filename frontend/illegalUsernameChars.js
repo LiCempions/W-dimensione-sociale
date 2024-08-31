@@ -1,1 +1,1 @@
-const illegalChars = /[?!:;,. \n#@]/
+export const illegalChars = /[?!:;,. \n#@]/
