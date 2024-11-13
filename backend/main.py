@@ -4,6 +4,7 @@ import mysql.connector.logger
 from pydantic import BaseModel
 import mysql.connector
 from fastapi.middleware.cors import CORSMiddleware
+import dataTypes
 
 # =========================================
 # ---------------- Sistema ----------------
