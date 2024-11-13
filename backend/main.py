@@ -28,6 +28,35 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+#==========================================
+# --------------- Comodità ----------------
+#==========================================
+
+def baseRequest(query: str, callback, *args,
+                values: tuple = (),
+                successMsg: str = "Richiesta eseguita con successo",
+                errorMsg: str = f"Errore nella richiesta: {error}",
+                shouldCommit: bool=True,
+                **argk):
+    try:
+        conn = mysql.connector.connect(**config)
+        cursor = conn.cursor()
+        cursor.execute(query, values)
+        callback(*args, cursor=cursor, **argk)
+        if shouldCommit: conn.commit()
+        return {"msg": successMsg}
+    except mysql.connector.Error as error:
+        return {"msg": errorMsg}
+    finally:
+        cursor.close()
+        conn.close()
+
+# Come utilizzare---------------------------
+# @app.post("testurl")
+# def testfun(user: user):
+#     def callback(cursor):
+#         return "bellavita"
+#     baseRequest("query", callback, shouldCommit=False)
 
 # =========================================
 # ----------------- Rotte -----------------
