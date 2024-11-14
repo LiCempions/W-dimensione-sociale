@@ -4,6 +4,7 @@ import mysql.connector.logger
 from pydantic import BaseModel
 import mysql.connector
 from fastapi.middleware.cors import CORSMiddleware
+import dataTypes
 
 # =========================================
 # ---------------- Sistema ----------------
@@ -28,40 +29,35 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ======================================
-# ---------- Inizializzazione ----------
-# ======================================
-class userRegister(BaseModel):
-    username: str
-    email: str
-    password: str
+#==========================================
+# --------------- Comodità ----------------
+#==========================================
 
-class userCredentials(BaseModel):
-    username: str
-    password: str
+def baseRequest(query: str, callback, *args,
+                values: tuple = (),
+                successMsg: str = "Richiesta eseguita con successo",
+                errorMsg: str = f"Errore nella richiesta: {error}",
+                shouldCommit: bool=True,
+                **argk):
+    try:
+        conn = mysql.connector.connect(**config)
+        cursor = conn.cursor()
+        cursor.execute(query, values)
+        callback(*args, cursor=cursor, **argk)
+        if shouldCommit: conn.commit()
+        return {"msg": successMsg}
+    except mysql.connector.Error as error:
+        return {"msg": errorMsg}
+    finally:
+        cursor.close()
+        conn.close()
 
-class post(BaseModel):
-    username: str
-    postText: str
-
-class answer(BaseModel):
-    username:str
-    postId:str
-    answerText:str
-
-class message(BaseModel):
-    userAuth: str
-    userDest: str
-    DMText: str
-
-class likeData(BaseModel):
-    username: str
-    postId: str
-
-class doubleUser(BaseModel):
-    username1: str
-    username2: str
-
+# Come utilizzare---------------------------
+# @app.post("testurl")
+# def testfun(user: user):
+#     def callback(cursor):
+#         return "bellavita"
+#     baseRequest("query", callback, shouldCommit=False)
 
 # =========================================
 # ----------------- Rotte -----------------
