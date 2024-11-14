@@ -42,7 +42,7 @@ def baseRequest(query: str, callback, *args,
         conn = mysql.connector.connect(**config)
         cursor = conn.cursor()
         cursor.execute(query, values)
-        callback(*args, cursor=cursor, **argk)
+        if callback: callback(*args, cursor=cursor, **argk)
         if shouldCommit: conn.commit()
         return {"msg": successMsg}
     except mysql.connector.Error as err:
