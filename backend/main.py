@@ -1,10 +1,9 @@
 from fastapi import FastAPI
 import mysql.connector.cursor
 import mysql.connector.logger
-from pydantic import BaseModel
 import mysql.connector
 from fastapi.middleware.cors import CORSMiddleware
-import dataTypes
+from dataTypes import *
 
 # =========================================
 # ---------------- Sistema ----------------
@@ -36,7 +35,7 @@ app.add_middleware(
 def baseRequest(query: str, callback, *args,
                 values: tuple = (),
                 successMsg: str = "Richiesta eseguita con successo",
-                errorMsg: str = f"Errore nella richiesta: {error}",
+                errorMsg: str = "Errore nella richiesta: {error}",
                 shouldCommit: bool=True,
                 **argk):
     try:
@@ -46,8 +45,8 @@ def baseRequest(query: str, callback, *args,
         callback(*args, cursor=cursor, **argk)
         if shouldCommit: conn.commit()
         return {"msg": successMsg}
-    except mysql.connector.Error as error:
-        return {"msg": errorMsg}
+    except mysql.connector.Error as err:
+        return {"msg": errorMsg.format(error=err)}
     finally:
         cursor.close()
         conn.close()
