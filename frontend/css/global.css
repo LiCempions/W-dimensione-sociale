@@ -1,25 +1,47 @@
 :root{
     /* --main-color-1: hsl(117, 78%, 43%); */
+    /* --main-bg: #0f288a; */
+    /* --main-bg: #00ec5b; */   
+    /* --main-color-1: #1943d9; */
+    /* --main-color-1: #9289cb; */
+
     --main-bg: hsl(143, 96%, 46%);
     --main-color-1: hsl(117, 94%, 42%);
     --main-color-2: hsl(117, 90%, 60%);
-    /* --main-bg: #0f288a; */
-    /* --main-bg: #00ec5b; */
-    
-}
-:root{
-    --header-h: 4.5rem;
-
     --main-bg: #194b3d;
-    /* --main-color-1: #1943d9; */
-    /* --main-color-1: #9289cb; */
     --main-color-1: hsl(117, 94%, 30%);
     --border-color: whitesmoke;
+    --tag-color: rgb(110, 168, 254);
+ 
+    --header-h: 4.5rem;
 }
 
+
+body{
+    height: 100dvh;
+    display: grid;
+    grid-template-columns: min-content auto;
+    grid-template-rows: min-content auto;
+}
 header{
     height: var(--header-h);
+    grid-column: 1 / span 2;
 }
+
+@media screen and (width<576px) {
+    body{
+        grid-template-columns: auto;
+        grid-template-rows: repeat(2, min-content) auto;
+    }
+    header{
+        grid-column: 1 / 1;
+    }
+}
+
+main{
+    overflow-y: auto;
+}
+
 
 textarea:focus-visible{
     outline: none;
@@ -55,4 +77,30 @@ textarea:focus-visible{
     body{
         background-color: black;
     }
+}
+
+
+#username{
+    font-size: 130%;
+}
+
+.separator{
+    width: 95%;
+}
+
+.post{
+    width: 50%;
+    max-width: 50rem;
+}
+.postText{
+    resize: none;
+    border-style: none;
+}
+
+.tag{
+    text-decoration: none;
+}
+
+.tag, .tag:visited{
+    color: var(--tag-color);
 }

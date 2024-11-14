@@ -28,6 +28,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 #==========================================
 # --------------- Comodità ----------------
 #==========================================
@@ -178,6 +179,26 @@ def getPosts(username: str):
         cursor.close()
         conn.close()
 
+
+#stampa di post specifici
+@app.post("/api/v1/filteredPosts")
+def getPosts(constraints: str):
+    try:
+        conn = mysql.connector.connect(**config)
+        cursor = conn.cursor()
+        query = "SELECT user_id, post_text, post_id FROM posts WHERE %s"
+        values = [constraints]
+        cursor.execute(query, values)
+        posts = cursor.fetchall()
+        postList = [{"auth": post[0], "postText": post[1], "postID": post[2] } for post in posts]
+
+        return {"posts":postList}
+    except mysql.connector.Error as err:
+        return {"msg": f"Errore durante la lettura dei post: {err}"}
+    finally:
+        cursor.close()
+        conn.close()
+
 #rotta di creazione post
 @app.post("/api/v1/post")
 def newPost(post: post):
@@ -271,13 +292,13 @@ def showMessages(users: doubleUser):
 
 # Likes -----------------------------------
 #rotta di visualizzazione likes
-@app.get("/api/v1/getLikes/{postId}")
-def getLikes(postId: str):
+@app.post("/api/v1/getLikes")
+def getLikes(likeData: likeData):
     try:
         conn = mysql.connector.connect(**config)
         cursor = conn.cursor()
-        query = "SELECT user_id FROM likes WHERE post_id = %s"
-        values = [postId]
+        query = "SELECT user_id FROM likes WHERE post_id = %s LIMIT 3"
+        values = [likeData.postId]
         cursor.execute(query, values)
         users = cursor.fetchall()
         userList = [user[0] for user in users]
@@ -285,7 +306,13 @@ def getLikes(postId: str):
         query = "SELECT COUNT(*) FROM likes WHERE post_id = %s"
         cursor.execute(query, values)
         likesNumber = cursor.fetchall()
-        return {"likesNumber": likesNumber[0][0], "userList": userList}
+
+        query = "SELECT COUNT(*) FROM likes WHERE post_id = %s AND user_id = %s"
+        values = [likeData.postId, likeData.username]
+        cursor.execute(query, values)
+        liked = cursor.fetchone()[0] == 1
+
+        return {"likesNumber": likesNumber[0][0], "userList": userList, "userLiked": liked}
     except mysql.connector.Error as err:
         return {"msg": f"Errore durante la lettura dei likes: {err}"}
     finally:
@@ -293,22 +320,22 @@ def getLikes(postId: str):
         conn.close()
 
 #rotta di visualizzazione like risposte
-@app.get("/api/v1/getAnswerLikes/{postId}")
-def getLikes(postId: str):
+@app.post("/api/v1/getAnswerLikes")
+def getLikes(likeData: likeData):
     try:
         conn = mysql.connector.connect(**config)
         cursor = conn.cursor()
         query = "SELECT COUNT(*) FROM answer_likes WHERE answer_id = %s"
-        values = [postId]
+        values = [likeData.postId]
         cursor.execute(query, values)
         likesNumber = cursor.fetchone()[0]
 
-        query = "SELECT user_id FROM answer_likes WHERE answer_id = %s"
+        query = "SELECT COUNT(*) FROM answer_likes WHERE answer_id = %s AND user_id = %s"
+        values = [likeData.postId, likeData.username]
         cursor.execute(query, values)
-        users = cursor.fetchall()
-        userList = [user[0] for user in users]
+        liked = cursor.fetchone()[0] == 1
 
-        return {"likesNumber": likesNumber, "userList": userList}
+        return {"likesNumber": likesNumber, "userLiked": liked}
     except mysql.connector.Error as err:
         return {"msg": f"Errore durante la lettura dei likes della risposta: {err}"}
     finally:
@@ -317,7 +344,7 @@ def getLikes(postId: str):
 
 #rotta di aggiunta like
 @app.post("/api/v1/like")
-def likePost(likeData: likeDataPut):
+def likePost(likeData: likeData):
     try:
         conn = mysql.connector.connect(**config)
         cursor = conn.cursor()
@@ -333,7 +360,7 @@ def likePost(likeData: likeDataPut):
 
 #rotta di aggiuta like a risposta
 @app.post("/api/v1/likeAnswer")
-def likeAnswer(likeData: likeDataPut):
+def likeAnswer(likeData: likeData):
     try:
         conn = mysql.connector.connect(**config)
         cursor = conn.cursor()

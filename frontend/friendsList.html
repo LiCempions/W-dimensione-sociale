@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="css/bs-override.css">
     <link rel="stylesheet" href="css/animations.css">
     <link rel="stylesheet" href="css/global.css">
-    <link rel="stylesheet" href="css/homepage.css">
+    <link rel="stylesheet" href="css/friendsList.css">
     <link rel="stylesheet" href="css/sidebar.css">
 </head>
 <body>
@@ -18,7 +18,7 @@
             <div class="container">
                 <span class="navbar-brand text-light">
                     <img src="assets/logo.svg" alt="W" class="mx-2 d-inline-block align-text-center navbar-img">
-                    W - <span id="location"></span>
+                    W - Amici
                 </span>
                 <span class="navbar-brand text-light " id="username"></span>
             </div>
@@ -44,12 +44,19 @@
             </li>
         </ul>
     </nav>
-    <main class="d-flex flex-column flex-sm-row main flex-fill">
-        <div class="text-center pt-sm-4 content" id="content">
+    <main>
+        <div class="d-flex flex-column friend-list" id="friendsList">
+            <h5 class="friend-list-item my-0 friend-list-title">Amici:</h5>
+        </div>
+        <div class="d-flex flex-column friend-list mt-4" id="usersList">
+            <div class="d-flex justify-content-between align-items-center friend-list-item">
+                <h5 class="my-0 friend-list-title">Altri utenti:</h5>
+                <input type="text" id="searchUsers" class="form-control w-25" placeholder="Cerca un utente">
+            </div>
         </div>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="homepageScripts.js"></script>
+    <script src="friendList.js"></script>
     <script src="global.js"></script>
     <script src="autoDark.js"></script>
 </body>

@@ -1,3 +1,5 @@
+import { illegalChars } from "illegalUsernameChars.js";
+
 document.getElementById("register").addEventListener("submit", async (event)=>{
     event.preventDefault();
 
@@ -5,6 +7,16 @@ document.getElementById("register").addEventListener("submit", async (event)=>{
         "username" : document.getElementById("userReg").value,
         "email" : document.getElementById("emailReg").value,
         "password" : document.getElementById("passReg").value
+    }
+
+    if (formData.username.search(illegalChars)!=-1) {
+        document.getElementById("userRegLabel").innerHTML =
+        `Nome utente - <span class="text-danger">proibiti: ${
+            illegalChars.source.slice(1, -1).replace(/[\n ]/,"").match(/./g).join(' ').concat(" spazi e a capo")
+            // mostra i singoli caratteri della regex separati da spazi bianchi
+            // sostituisce quelli non visibili nella regex con una scritta
+        }</span>`
+        return
     }
 
     try {
