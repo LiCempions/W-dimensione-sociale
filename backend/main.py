@@ -34,15 +34,22 @@ app.add_middleware(
 
 def baseRequest(query: str, callback, *args,
                 values: tuple = (),
-                successMsg: str = "Richiesta eseguita con successo",
-                errorMsg: str = "Errore nella richiesta: {error}",
+                successMsg: str = "Richiesta di {fnName} eseguita con successo",
+                errorMsg: str = "Errore nella richiesta di {fnName}: {error}",
                 shouldCommit: bool=True,
                 **argk):
     try:
         conn = mysql.connector.connect(**config)
         cursor = conn.cursor()
         cursor.execute(query, values)
-        if callback: callback(*args, cursor=cursor, **argk)
+        if callback:
+            successMsg = successMsg.format(fnName=callback.__name__)
+            errorMsg = errorMsg.format(fnName=callback.__name__)
+            callback(*args, cursor=cursor, **argk)
+        else:
+            successMsg = successMsg.format(fnName="baseRequest")
+            errorMsg = errorMsg.format(fnName="baseRequest")
+
         if shouldCommit: conn.commit()
         return {"msg": successMsg}
     except mysql.connector.Error as err:
