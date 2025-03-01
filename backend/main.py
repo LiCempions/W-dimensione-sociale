@@ -95,28 +95,6 @@ def bacheca():
         cursor.execute(query)
         posts = cursor.fetchall()
         postList = [ {"auth": post[0], "postText": post[1], "postID": post[2]} for post in posts ]
-
-        # query = "SELECT user_id, post_text, post_id, answer_to FROM posts WHERE answer_to IS NOT NULL ORDER BY answer_to DESC"
-        # cursor.execute(query)
-        # answers = cursor.fetchall()
-
-        # answerList = []
-        # if len(answers)>0:
-        #     group = []
-        #     prevId = answers[0][3]
-        #     for answer in answers:
-        #         if prevId == answer[3]:     # Se l'id precedente (del post proprietario) è uguale a quello corrente
-        #             group.append(answer)    # Aggiungi la risposta al gruppo, dove ogni risposta avrà lo stesso answer_to
-        #         else:   # Quando cambia
-        #             answerList.append( {
-        #                 "answerTo": prevId, # Aggiungi alla lista un oggetto con l'id del post proprietario delle risposte
-        #                 "answers": [ {"auth": groupAnswer[0], "postText": groupAnswer[1], "postID": groupAnswer[2]} for groupAnswer in group ]
-        #                     # e con una lista di tutte le risposte raggruppate
-        #                 } )
-        #             group.clear()
-        #             prevId = answer[3]
-        #             # Ripristina le condizioni iniziali
-
         return {"posts":postList}
     except mysql.connector.Error as err:
         return {"msg": f"Errore durante il caricamento della bacheca: {err}"}
