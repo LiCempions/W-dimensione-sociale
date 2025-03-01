@@ -40,7 +40,7 @@ app.add_middleware(
 #rotta di registrazione
 @app.post("/api/v1/register")
 @baseRequest("INSERT INTO users(username, email, password) VALUES (%s, %s, %s)", ('username', 'email', 'password'), config, "Errore durante la registrazione")
-def registrazione(user: userRegister, conn=None):
+def registrazione(user: userRegister, conn:SQLconn=None):
     conn.commit()
     return {"msg": f"Registrazione avvenuta con successo per {user.username}"}
 
