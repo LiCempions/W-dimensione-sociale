@@ -23,8 +23,6 @@ def baseRequest(query:str, queryArgsMap:tuple[str, ...]|None, config:dict, error
         return inner
     return decorator
 
-quit()
-
 # def baseRequest_v1(query: str, callback, *args,
 #                 values: tuple = (),
 #                 successMsg: str = "Richiesta di {fnName} eseguita con successo",
