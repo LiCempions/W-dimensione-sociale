@@ -4,6 +4,7 @@ import mysql.connector.logger
 import mysql.connector
 from fastapi.middleware.cors import CORSMiddleware
 from dataTypes import *
+from baseRequest import baseRequest
 
 # =========================================
 # ---------------- Sistema ----------------
@@ -28,43 +29,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-#==========================================
-# --------------- Comodità ----------------
-#==========================================
-
-def baseRequest(query: str, callback, *args,
-                values: tuple = (),
-                successMsg: str = "Richiesta di {fnName} eseguita con successo",
-                errorMsg: str = "Errore nella richiesta di {fnName}: {error}",
-                shouldCommit: bool=True,
-                **argk):
-    try:
-        conn = mysql.connector.connect(**config)
-        cursor = conn.cursor()
-        cursor.execute(query, values)
-        if callback:
-            successMsg = successMsg.format(fnName=callback.__name__)
-            errorMsg = errorMsg.format(fnName=callback.__name__)
-            callback(*args, cursor=cursor, **argk)
-        else:
-            successMsg = successMsg.format(fnName="baseRequest")
-            errorMsg = errorMsg.format(fnName="baseRequest")
-
-        if shouldCommit: conn.commit()
-        return {"msg": successMsg}
-    except mysql.connector.Error as err:
-        return {"msg": errorMsg.format(error=err)}
-    finally:
-        cursor.close()
-        conn.close()
-
-# Come utilizzare---------------------------
-# @app.post("testurl")
-# def testfun(user: user):
-#     def callback(cursor):
-#         return "bellavita"
-#     baseRequest("query", callback, shouldCommit=False)
-
 # =========================================
 # ----------------- Rotte -----------------
 # =========================================
@@ -72,20 +36,10 @@ def baseRequest(query: str, callback, *args,
 # Accesso----------------------------------
 #rotta di registrazione
 @app.post("/api/v1/register")
-def registrazione(user: userRegister):
-    try:
-        conn = mysql.connector.connect(**config)
-        cursor = conn.cursor()
-        query = "INSERT INTO users(username, email, password) VALUES (%s, %s, %s)"
-        values = user.username, user.email, user.password
-        cursor.execute(query, values)
-        conn.commit()
-        return {"msg": f"Registrazione avvenuta con successo per {user.username}"}
-    except mysql.connector.Error as err:
-        return {"msg": f"Errore durante la registrazione: {err}"}
-    finally:
-        cursor.close()
-        conn.close()
+@baseRequest("INSERT INTO users(username, email, password) VALUES (%s, %s, %s)", ('username', 'email', 'password'), config, "Errore durante la registrazione")
+def registrazione(user: userRegister, conn=None):
+    conn.commit()
+    return {"msg": f"Registrazione avvenuta con successo per {user.username}"}
 
 # Rotta di login
 @app.post("/api/v1/login")
