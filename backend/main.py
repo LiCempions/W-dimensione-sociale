@@ -6,6 +6,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from dataTypes import *
 from baseRequest import baseRequest
 
+SQLconn = mysql.connector.connection.MySQLConnection
+SQLcurs = mysql.connector.cursor.MySQLCursor
+
 # =========================================
 # ---------------- Sistema ----------------
 # =========================================
