@@ -88,7 +88,7 @@ def allUsers():
 #rotta di bacheca (stampa di tutti i post)
 @app.get("/api/v1/bacheca")
 @baseRequest("SELECT user_id, post_text, post_id FROM posts ORDER BY post_id DESC", None, config, "Errore durante il caricamento della bacheca")
-def bacheca(cursor:SQLcurs=None):
+def bacheca(cursor:SQLcurs=None, conn:SQLconn=None):
     posts = cursor.fetchall()
     postList = [ {"auth": post[0], "postText": post[1], "postID": post[2]} for post in posts ]
     return {"posts":postList}
