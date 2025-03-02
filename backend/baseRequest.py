@@ -1,18 +1,22 @@
 import mysql.connector
 from types import FunctionType
+from pydantic import BaseModel
 
 def baseRequest(query:str, queryArgsMap:tuple[str, ...]|None, config:dict, errorMsg:str|None = None):
     def decorator(func: FunctionType):
-        def inner(requestArg: dict|str):
+        def inner(requestArg: BaseModel|str|None = None):
             try:
                 conn = mysql.connector.connect(**config)
                 cursor = conn.cursor()
-                if isinstance(requestArg, dict):
-                    assert queryArgsMap is not None, "queryArgsMap must be provided if requestArg is a dict in " + func.__name__
-                    queryArgs = [requestArg[arg] for arg in queryArgsMap]
+                if not requestArg:
+                    cursor.execute(query)
                 else:
-                    queryArgs = [requestArg]
-                cursor.execute(query, queryArgs)
+                    if isinstance(requestArg, BaseModel):
+                        assert queryArgsMap is not None, "queryArgsMap must be provided if requestArg is in " + func.__name__
+                        queryArgs = [requestArg[arg] for arg in queryArgsMap]
+                    else:
+                        queryArgs = [requestArg]
+                    cursor.execute(query, queryArgs)
                 
                 return func(conn=conn, cursor=cursor)
             except mysql.connector.Error as err:
