@@ -1,24 +1,28 @@
 import mysql.connector
+import mysql.connector.cursor
 from types import FunctionType
-from pydantic import BaseModel
+from typing import TypeAlias
 
-def baseRequest(query:str, queryArgsMap:tuple[str, ...]|None, config:dict, errorMsg:str|None = None):
+BASE_TYPES_TUPLE = (str, int, float, bool)
+
+def baseRequest(query:str, config:dict[str, str], bodyType:TypeAlias, queryArgsMap:tuple[str, ...]|None=None, errorMsg:str|None = None):
     def decorator(func: FunctionType):
-        def inner(requestArg: BaseModel|str|None = None):
+        def inner(requestBody: bodyType):
             try:
                 conn = mysql.connector.connect(**config)
                 cursor = conn.cursor()
-                if not requestArg:
+                if requestBody is None:
                     cursor.execute(query)
                 else:
-                    if isinstance(requestArg, BaseModel):
-                        assert queryArgsMap is not None, "queryArgsMap must be provided if requestArg is in " + func.__name__
-                        queryArgs = [requestArg[arg] for arg in queryArgsMap]
+                    if isinstance(requestBody, BASE_TYPES_TUPLE):
+                        queryArgs = [requestBody]
                     else:
-                        queryArgs = [requestArg]
+                        assert queryArgsMap is not None, "queryArgsMap must be provided if requestBody is provided in " + func.__name__
+                        dictBody = dict(requestBody)
+                        queryArgs = [dictBody[arg] for arg in queryArgsMap]
                     cursor.execute(query, queryArgs)
                 
-                return func(conn=conn, cursor=cursor)
+                return func(requestBody, conn=conn, cursor=cursor)
             except mysql.connector.Error as err:
                 return {"msg": (errorMsg or f'Errore durante la procedura "{func.__name__}"') + f': {err}'}
             finally:
