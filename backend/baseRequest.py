@@ -6,8 +6,9 @@ from typing import TypeAlias
 BASE_TYPES_TUPLE = (str, int, float, bool)
 
 def baseRequest(query:str, config:dict[str, str], bodyType:TypeAlias, queryArgsMap:tuple[str, ...]|None=None, errorMsg:str|None = None):
+    """Very limited use: FastAPI uses parameter names, type annotations and default values to exctract data from url and to validate the request body. inner would have to be declared dynamically, but doesn't seem safe"""
     def decorator(func: FunctionType):
-        def inner(requestBody: bodyType):
+        def inner(requestBody: bodyType): # type: ignore
             try:
                 conn = mysql.connector.connect(**config)
                 cursor = conn.cursor()
