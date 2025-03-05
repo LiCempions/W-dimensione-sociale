@@ -5,3 +5,4 @@
 /backend/__pycache__
 /backend/**.sql
 /frontend/test.html
+frontend/assets/desktop.ini
