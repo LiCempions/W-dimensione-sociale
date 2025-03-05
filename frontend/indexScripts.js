@@ -1,4 +1,5 @@
-import { illegalChars } from "illegalUsernameChars.js";
+// import { illegalChars } from "illegalUsernameChars.js";
+const illegalChars = /[?!:;,. \n#@]/;
 
 document.getElementById("register").addEventListener("submit", async (event)=>{
     event.preventDefault();
