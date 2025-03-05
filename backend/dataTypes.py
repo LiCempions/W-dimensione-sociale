@@ -23,7 +23,7 @@ class message(BaseModel):
     userDest: str
     DMText: str
 
-class likeDataPut(BaseModel):
+class likeData(BaseModel):
     username: str
     postId: str
 
