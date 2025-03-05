@@ -77,14 +77,14 @@ const breakpoint = 576;
 
 registerCard.addEventListener("click", ()=>{
     if (visualViewport.width <= breakpoint) {
-        registerCard.style.transform="rotate(0)";
-        loginCard.style.transform="rotate(90deg)";
+        registerCard.classList.remove("rotate--90")
+        loginCard.classList.add("rotate-90")
     }
 })
 
 loginCard.addEventListener("click", ()=>{
     if (visualViewport.width <= breakpoint) {
-        loginCard.style.transform="rotate(0)";
-        registerCard.style.transform="rotate(-90deg)";
+        loginCard.classList.remove("rotate-90")
+        registerCard.classList.add("rotate--90")
     }
 })

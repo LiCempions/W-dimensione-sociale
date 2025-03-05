@@ -33,15 +33,19 @@ footer{
         position: absolute;
         right: 0;
         transform-origin: right 10%;
-        transform: rotate(-90deg);
         transition: transform 0.3s;
     }
     #loginCard{
         position: absolute;
         left: 0;
         transform-origin: left 15%;
-        transform: rotate(0);
         transition: transform 0.3s;
+    }
+    .rotate-90{
+        transform: rotate(90deg);
+    }
+    .rotate--90{
+        transform: rotate(-90deg);
     }
     body{
         overflow-x: hidden;
