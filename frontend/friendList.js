@@ -95,7 +95,8 @@ async function loadUsers(friendList) {
             const data = await response.json()
 
             document.getElementById("searchUsers").addEventListener("input", ()=>{
-                const toSearch = users.children;
+                const toSearch = document.getElementById("usersList").children;
+                const searchBar = document.getElementById("searchUsers");
 
                 for (let i = 1; i < toSearch.length; i++) {
                     const curr = toSearch.item(i);
