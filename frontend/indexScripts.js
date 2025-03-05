@@ -58,7 +58,6 @@ document.getElementById("login").addEventListener("submit", async (event) => {
 
         if (response.ok) {
             const data = await response.json()
-            console.log(data.msg);
             if (data.ok) {
                 sessionStorage.setItem("username", username);
                 window.location.href = "homepage.html"
