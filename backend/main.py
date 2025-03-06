@@ -1,6 +1,5 @@
 from fastapi import FastAPI
 import mysql.connector.cursor
-import mysql.connector.logger
 import mysql.connector
 from fastapi.middleware.cors import CORSMiddleware
 from dataTypes import *
