@@ -350,8 +350,6 @@ async function newPost() {
         "postText": document.getElementById("newPostContent").value,
         "hashtags": document.getElementById("newPostContent").value.match(/#[^ \n.,;:!?@#<>]+/g)
     }
-    console.log("Started");
-    console.log(document.getElementById("newPostContent"));
 
     if (data.postText != "") {
         try {
