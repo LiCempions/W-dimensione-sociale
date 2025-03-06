@@ -280,6 +280,24 @@ async function loadSpecificPosts(user){
     }
 }
 
+async function loadParamsPosts(){
+    try {
+        const response = await fetch(`http://127.0.0.1:8000/api/v2/posts${document.location.search}`)
+        if (response.ok) {
+            const data = await response.json()
+            data.posts.forEach(current => {
+                generatePost(current);
+                loadLikes(current.postID);
+            });
+            adaptiveTA();
+        } else {
+            console.error("Errore nel database: ", response.statusText);
+        }
+    } catch (err) {
+        console.error("Errore nel carimento della bacheca: ", err);
+    }
+}
+
 
 // Risposte -------------------------------
 async function loadAnswers(postID, loadAll=false, loadFirst=true){
@@ -400,9 +418,18 @@ function loadMoreAnswers(postID, loadAll) {
 }
 
 // Inizializzazione -----------------------
+// window.onload = ()=>{
+//     const params = new URLSearchParams(window.location.search);
+//     params.has("user") ? loadUserPinboard(params.get("user")) : loadPinboard();
+// }
+
 window.onload = ()=>{
-    const params = new URLSearchParams(window.location.search);
-    params.has("user") ? loadUserPinboard(params.get("user")) : loadPinboard();
+    // params = new URLSearchParams(document.location.search);
+    emptyContent();
+    showNewPostForm();
+    loadParamsPosts();
+
+    document.getElementById("location").innerText = document.location.search=="" ? "Bacheca":"Ricerca";
 }
 
 //#endregion
