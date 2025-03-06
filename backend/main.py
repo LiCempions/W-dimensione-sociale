@@ -84,7 +84,7 @@ def bacheca():
 #rotta di stampa dei post di un utente specifico
 @app.get("/api/v1/posts/{username}")
 def getPosts(username: str):
-    res = queryDB("SELECT post_text, post_id FROM posts WHERE user_id LIKE %s", [username], config)
+    res = queryDB("SELECT post_text, post_id FROM posts WHERE user_id LIKE %s ORDER BY posts.post_id DESC", [username], config)
     if isinstance(res, DBerror):
         return {"msg": f"Errore durante la lettura dei post: {res}"}
     else:
