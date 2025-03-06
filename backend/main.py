@@ -117,11 +117,32 @@ def getPosts(user: str|None=None, hashtags:str|None = None, limit:int=20, offset
 #rotta di creazione post
 @app.post("/api/v1/post")
 def newPost(post: post):
-    res = queryDB("INSERT INTO posts(user_id, post_text) VALUES (%s, %s)", (post.username, post.postText), config, False)
-    if isinstance(res, DBerror):
-        return {"msg": f"Errore durante l'aggiunta del post: {res}"}
-    else:
+    try:
+        conn = mysql.connector.connect(**config)
+        cursor = conn.cursor()
+        query = "INSERT INTO posts(user_id, post_text) VALUES (%(username)s, %(postText)s)"
+        cursor.execute(query, dict(post))
+
+        if post.hashtags is not None:
+            # Deduplicazione degli hashtag
+            hashtags = list(set(post.hashtags))
+            cursor.execute("SELECT LAST_INSERT_ID() INTO @post_id")
+            query = "INSERT INTO hashtags_links (hashtag, post_id) VALUES (%s, @post_id)"
+            cursor.executemany(query, hashtags)
+        
+        conn.commit()
         return {"msg": "Post aggiunto con successo"}
+    except mysql.connector.Error as err:
+        return {"msg": f"Errore durante l'aggiunta del post: {err}"}
+    finally:
+        cursor.close()
+        conn.close()
+
+    # res = queryDB("INSERT INTO posts(user_id, post_text) VALUES (%s, %s)", (post.username, post.postText), config, False)
+    # if isinstance(res, DBerror):
+    #     
+    # else:
+    #     return {"msg": "Post aggiunto con successo"}
 
 # Risposte --------------------------------
 #rotta di creazione risposta
