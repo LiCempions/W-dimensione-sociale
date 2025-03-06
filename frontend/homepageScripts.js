@@ -51,13 +51,13 @@ function showNewPostForm() {
 function generatePost(postData) {
     const post = document.createElement("div");
     post.className = "card post mt-2 ";
-    let testo;
 
     postData.postText = highlightTags(postData.postText);
     
     post.innerHTML = `
-    <div class="card-header " onclick="setSParam('user', '${postData.auth}')">
-        <h5 class="card-title ">${postData.auth}</h5>
+    <div class="card-header ">
+        <h5 class="card-title " onclick="setSParam('user', '${postData.auth}')">${postData.auth}</h5>
+        <div class="hashtags"></div>
     </div>
     <div class="card-body ">
         <p class="card-text ">${postData.postText}</p>
@@ -80,6 +80,17 @@ function generatePost(postData) {
     </div>
     `;
     loadAnswers(postData.postID, false, true);
+
+    // Find hashtags
+    const hashtags = postData.postText.match(/#[^ \n.,;:!?@#<>]+/g);
+    if(hashtags)
+        hashtags.forEach(htag => {
+            htagElem = document.createElement("a");
+            htagElem.innerText = htag;
+            htagElem.className = "badge bg-secondary text-light mx-1";
+            htagElem.href = `?hashtags=${htag.slice(1)}`;
+            post.getElementsByClassName("hashtags")[0].appendChild(htagElem);
+        });
 
     // On answer submit
     post.querySelector("form").addEventListener("submit", async (event)=>{
@@ -336,7 +347,8 @@ async function loadAnswers(postID, loadAll=false, loadFirst=true){
 async function newPost() {
     const data = {
         "username": sessionStorage.getItem("username"),
-        "postText": document.getElementById("newPostContent").value
+        "postText": document.getElementById("newPostContent").value,
+        "hashtags": document.getElementById("newPostContent").value.match(/#[^ \n.,;:!?@#<>]+/g)
     }
     console.log("Started");
     console.log(document.getElementById("newPostContent"));
