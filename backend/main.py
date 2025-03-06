@@ -81,7 +81,7 @@ def bacheca():
         postList = [ {"auth": post[0], "postText": post[1], "postID": post[2]} for post in res ]
         return {"posts":postList}
 
-#rotta di stampa dei post di un utente specifico
+#rotta di stampa di post specifici
 @app.get("/api/v1/posts/{username}")
 def getPosts(username: str):
     res = queryDB("SELECT post_text, post_id FROM posts WHERE user_id LIKE %s ORDER BY posts.post_id DESC", [username], config)
@@ -90,6 +90,27 @@ def getPosts(username: str):
     else:
         postList = [{"auth": username, "postText": post[0], "postID": post[1] } for post in res]
         return {"posts":postList}
+
+@app.get("/api/v2/posts")
+def getPosts(user: str|None=None, hashtags:str|None = None, limit:int=20, offset: int=0):
+    SEPARATOR = '", "'
+    hashtags = hashtags.split(",") if hashtags else None
+    query = ["SELECT posts.user_id, posts.post_text, posts.post_id FROM posts"]
+
+    if hashtags:
+        query.append(f"INNER JOIN (SELECT COUNT(*) AS tags_found, post_id FROM hashtags_links WHERE hashtag IN (\"{ SEPARATOR.join(hashtags) }\") GROUP BY post_id HAVING tags_found = {len(hashtags)}) AS tagged ON posts.post_id = tagged.post_id")
+    if user:
+        query.append(f"WHERE posts.user_id = \"{user}\"")
+    
+    query.append(f"ORDER BY posts.post_id DESC LIMIT {limit} OFFSET {offset}")
+    query = " ".join(query)
+
+    def _get_posts(cursor:SQLcurs):
+        posts = cursor.fetchall()
+        postList = [{"auth": post[0], "postText": post[1], "postID": post[2] } for post in posts]
+        return {"posts": postList}
+
+    return callbackRequest(query, None, config, _get_posts)
 
 # Orco can mai vista una cosa meno sicura di filteredPosts
 
