@@ -12,6 +12,7 @@ class userCredentials(BaseModel):
 class post(BaseModel):
     username: str
     postText: str
+    hashtags: list[str]|None = None
 
 class answer(BaseModel):
     username:str
