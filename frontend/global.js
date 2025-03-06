@@ -60,7 +60,7 @@ function highlightTags(text/*String*/) {
     let stop = 0;
     let start = firstOccurrence(text, ['#','@'], stop);
     const sParams = new URLSearchParams(window.location.search);
-    const tagTypes = { '@':"user", '#':"hashtag" }
+    const tagTypes = { '@':"user", '#':"hashtags" }
 
     // let safetyI = 0
 
